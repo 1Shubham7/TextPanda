@@ -1,46 +1,87 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/Navbar';
+import TextForm from './components/TextForm';
+import About from './components/About';
+import React, {useState} from 'react';
+import Alert from './components/Alert';
+
 
 function App() {
+
+  const [alert,setAlert] = useState(null);
+  const [mode, setMode] = useState('light');
+  const [color, setColor] = useState('green');
+  const [myStyle,setMyStyle] = useState({
+      color: '#212529'
+    })
+
+  function setTheAlert(message, type){
+      setAlert({
+        msg: message,
+        type: type
+      })
+  }
+
+  function toggleMode(props){
+    if(mode ==='light'){
+      setMode('dark');
+      setColor('black');
+      document.body.style.backgroundColor = '#343a40';
+      setMyStyle({
+        color: 'white',
+      })
+      setTheAlert("Dark Mode has been enabled", "Success");
+    }
+    else {
+      setMode('light');
+      setColor('white');
+      document.body.style.backgroundColor = 'white';
+      setMyStyle({
+        color: 'black',
+      })
+      setTheAlert("Light Mode has been enabled","Success");
+    }
+  }
+
+  // const[mode, setMode] = useState('light');
+  // const[xtext, setXText] = useState('Dark Mode');
+  // const[myCSS, setMyCSS] = useState({
+  //   color: 'black',
+  //   backgroundColor : 'white',
+  // })
+
+  // function darkMode(){
+  //   if (myCSS.backgroundColor === 'white'){
+  //     setMyCSS({
+  //         backgroundColor: 'black',
+  //         color:'white',
+  //     })
+  //     setXText('Enable Light Mode');
+  //     // setMode('dark');
+  //     Navbar.toggleMode();
+  //   } else {
+  //     setMyCSS({
+  //       backgroundColor: 'white',
+  //       color:'black',
+  //   })
+  //    setMode('light');
+  //   setXText('Dark Mode');
+  //   }
+  // }
+
+
+
   return (
     <>
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-  <a className="navbar-brand" href="#">Texting.com</a>
-  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span className="navbar-toggler-icon"></span>
-  </button>
-
-  <div className="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul className="navbar-nav mr-auto">
-      <li className="nav-item active">
-        <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="#">LinkedIn</a>
-      </li>
-      <li className="nav-item dropdown">
-        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a className="dropdown-item" href="#">Action</a>
-          <a className="dropdown-item" href="#">Another action</a>
-          <div className="dropdown-divider"></div>
-          <a className="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
-    </ul>
-    <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" type="search" placeholder="Search on this site" aria-label="Search" />
-      <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-    </>
-  );
+<Navbar xxx="TextPanda.com" mode={mode} toggleMode={toggleMode} myStyle={myStyle}/>
+<Alert alert={alert}/>
+{/* <About /> */}
+<div className="container my-2 ">
+<TextForm heading = "Enter the text to analyze below" mode={mode} myStyle={myStyle} />
+{/* <button className='btn btn-primary' >{xtext}</button> */}
+</div>
+</>
+);
 }
 
 export default App;
